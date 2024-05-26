@@ -37,7 +37,7 @@ async def login(session, id, pwd, loginKey) -> bool:
         "pwd": pwd,
         "password": "*" * len(pwd),
         "login_key": loginKey,
-        "encrypt_pwd": des_encode(md5_encode(pwd)[:4] + loginKey[:4], pwd + " " * (16-len(pwd)) if len(pwd) < 16 else pwd),
+        "encrypt_pwd": des_encode(md5_encode(pwd)[:4] + loginKey[:4], pwd + " " * (16 - len(pwd) % 16) if len(pwd) % 16 != 0 else pwd),
     }) as response:
         res = await response.text()
         if "lang=\"big5" in res:

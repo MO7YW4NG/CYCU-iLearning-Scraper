@@ -11,7 +11,7 @@ target = Executable(
 
 setup(
     name="CYCU-iLearning-Scraper",
-    version="1.0",
+    version="1.1",
     description="cycu-ilearning-scarper",
     author="MO7YW4NG",
     options={'bdist_msi': {'initial_target_dir': r'[DesktopFolder]\\CYCU-Auto-Survey'},'bdist_mac': {'initial_target_dir': r'[DesktopFolder]\\CYCU-Auto-Survey'}},
