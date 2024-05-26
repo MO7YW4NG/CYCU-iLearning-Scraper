@@ -1,6 +1,6 @@
 # 中原大學 i-Learning 教學教材爬蟲 CYCU-iLearning-Scraper
 <p align="center">
-  <img src="[https://i.imgur.com/k0f81KT.png](https://imgur.com/xuqNQMN)" />
+  <img src="https://i.imgur.com/xuqNQMN.png" />
 </p>
 
 ## 介紹
