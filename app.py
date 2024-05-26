@@ -31,13 +31,13 @@ async def fetch_login_key(session):
             if "loginForm.login_key.value = \"" in res:
                 return res.split("loginForm.login_key.value = \"")[1].split("\"")[0]
 
-async def login(session, id, pwd, loginKey):
+async def login(session, id, pwd, loginKey) -> bool:
     async with session.post(url + "login.php", headers=headers, data={
         "username": id,
         "pwd": pwd,
         "password": "*" * len(pwd),
         "login_key": loginKey,
-        "encrypt_pwd": des_encode(md5_encode(pwd)[:4] + loginKey[:4], pwd + " " * 6),
+        "encrypt_pwd": des_encode(md5_encode(pwd)[:4] + loginKey[:4], pwd + " " * (16-len(pwd)) if len(pwd) < 16 else pwd),
     }) as response:
         res = await response.text()
         if "lang=\"big5" in res:
@@ -98,7 +98,7 @@ headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleW
 async def main():
     os.system("title CYCU-iLearning-Scraper")
     print("<!!! 尊重版權/著作權 尊重版權/著作權 尊重版權/著作權 !!!>")
-    
+    # try:
     id = input("輸入您的學號：")
     pwd = getpass.getpass("輸入您的itouch密碼：")
     
@@ -106,10 +106,10 @@ async def main():
     async with aiohttp.ClientSession(connector=connector) as session:
         login_key = await fetch_login_key(session)
         if not await login(session, id, pwd, login_key):
-            return
+            return asyncio.run(main())
         
         courses = await fetch_courses(session)
-            
+        
         print("下載中... ")
         start = time.time()
         
@@ -119,7 +119,9 @@ async def main():
             await asyncio.gather(*tasks)
         
         print(f"下載完成! 耗時: {time.time() - start}s")
-        os.system("pause")
+    # except Exception as e:
+        # print(e)
+    os.system("pause")
 
 if __name__ == "__main__":
     asyncio.run(main())
