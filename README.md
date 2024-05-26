@@ -7,7 +7,7 @@ https://github.com/MO7YW4NG/CYCU-iLearning-Scraper/assets/66549438/2c7428db-5d1a
 
 ## 提醒
 <p align="center">
-  <img src=https://www.lhu.edu.tw/psmart/ex/2019%E6%B5%B7%E5%A0%B1.jpg/>
+  <img src="https://www.lhu.edu.tw/psmart/ex/2019%E6%B5%B7%E5%A0%B1.jpg/">
 </p>
 
 ## 介紹
