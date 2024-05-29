@@ -19,7 +19,7 @@ setup(
 
 options={
     'build_exe': {
-        'packages': ['aiohttp','json','getpass','os','hashlib','base64','urllib','time','asyncio','Crypto','bs4'],
+        'packages': ['aiohttp','json','getpass','os','hashlib','base64','urllib','time','asyncio','Crypto','bs4','rich'],
         'include_files': ['icon.ico']
     }
 }
