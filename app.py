@@ -124,25 +124,26 @@ async def main():
         course_task = progress.add_task("[cyan]時間差不多囉...", total=len(courses))
         with progress:
             for course_id, course_name in courses.items():
-                progress.update(course_task, description=f"[cyan] 正在下載{course_name}")
+                progress.update(course_task, description=f"[cyan] 正在下載 {course_name}")
                 hrefs = await fetch_hrefs(session, course_id)
                 tasks = [ download_pdf(session, href, course_name) for href in hrefs ]
                 
+                taskStart = time.time()
                 # Sub progress bar
                 sub_task = progress.add_task("[orange3]", total=len(hrefs))
                 for task in tasks:
-                    progress.update(sub_task, description=f"[orange3] {hrefs[tasks.index(task)][hrefs[tasks.index(task)].rfind('/')+1:]}"[:50] + "...")
+                    progress.update(sub_task, description=f"[orange3] {hrefs[tasks.index(task)][hrefs[tasks.index(task)].rfind('/')+1:]}"[:50] + " ...")
                     await task
                     progress.update(sub_task, advance=1)
                     
                 progress.remove_task(sub_task)
                 progress.update(course_task, advance=1, description="")
-                progress.console.print(f"[green] {course_name} 下載完成")
+                progress.console.print(f"[green] {course_name} 下載完成, 耗時: %.2fs" % (time.time() - taskStart))
 
         progress.remove_task(course_task)
 
 
-        print(f"下載完成! 耗時: {time.time() - start}s")
+        print("下載完成! 耗時: %.2fs" % (time.time() - start))
     # except Exception as e:
         # print(e)
     os.system("pause")
