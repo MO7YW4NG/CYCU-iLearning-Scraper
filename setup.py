@@ -4,7 +4,7 @@ base = None
 
 target = Executable(
     script="app.py",
-    icon="icon.ico",
+    icon="icon.png",
     base=base
 )
 
