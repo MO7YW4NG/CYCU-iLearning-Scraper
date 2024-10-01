@@ -1,0 +1,72 @@
+name: Build Multi-Platform Installers
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+    
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install cx_Freeze
+        pip install -r requirements.txt
+    
+    - name: Build with cx_Freeze
+      run: python setup.py build
+    
+    - name: Create Windows MSI
+      if: matrix.os == 'windows-latest'
+      run: python setup.py bdist_msi
+    
+    - name: Create macOS app bundle
+      if: matrix.os == 'macos-latest'
+      run: |
+        python setup.py bdist_dmg
+    
+    - name: Create Linux Tarball
+      if: matrix.os == 'ubuntu-latest'
+      run: python setup.py bdist_appimage
+    
+    - name: Upload Windows artifact
+      if: matrix.os == 'windows-latest'
+      uses: actions/upload-artifact@v4
+      with:
+        name: windows-installer
+        path: dist/*.msi
+    
+    - name: Upload macOS artifact
+      if: matrix.os == 'macos-latest'
+      uses: actions/upload-artifact@v4
+      with:
+        name: macos-app
+        path: build/*.dmg
+    
+    - name: Upload Linux artifact
+      if: matrix.os == 'ubuntu-latest'
+      uses: actions/upload-artifact@v4
+      with:
+        name: linux-package
+        path: dist/*.AppImage
+    
+    - name: Debug - List workspace contents
+      if: always()
+      run: |
+        echo "Workspace contents:"
+        ls -R ${{ github.workspace }}
