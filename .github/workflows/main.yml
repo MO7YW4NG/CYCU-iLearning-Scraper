@@ -10,7 +10,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
+        os: [windows-latest,  ubuntu-latest]
     
     runs-on: ${{ matrix.os }}
     
@@ -32,9 +32,9 @@ jobs:
       if: matrix.os == 'windows-latest'
       run: python setup.py bdist_msi
     
-    - name: Create macOS app bundle
-      if: matrix.os == 'macos-latest'
-      run: python setup.py bdist_dmg
+    # - name: Create macOS app bundle
+    #   if: matrix.os == 'macos-latest'
+    #   run: python setup.py bdist_mac
     
     - name: Create Linux artifact
       if: matrix.os == 'ubuntu-latest'
@@ -47,12 +47,12 @@ jobs:
         name: windows-installer
         path: dist/*.msi
     
-    - name: Upload macOS artifact
-      if: matrix.os == 'macos-latest'
-      uses: actions/upload-artifact@v4
-      with:
-        name: macos-app
-        path: build/*.dmg
+    # - name: Upload macOS artifact
+    #   if: matrix.os == 'macos-latest'
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: macos-app
+    #     path: build/*.dmg
     
     - name: Upload Linux artifact
       if: matrix.os == 'ubuntu-latest'
@@ -66,3 +66,4 @@ jobs:
       run: |
         echo "Workspace contents:"
         ls -R ${{ github.workspace }}
+          
