@@ -10,7 +10,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest]
+        os: [windows-latest, macos-latest, ubuntu-latest]
     
     runs-on: ${{ matrix.os }}
     
@@ -28,19 +28,15 @@ jobs:
         pip install cx_Freeze
         pip install -r requirements.txt
     
-    - name: Build with cx_Freeze
-      run: python setup.py build
-    
     - name: Create Windows MSI
       if: matrix.os == 'windows-latest'
       run: python setup.py bdist_msi
     
-    # - name: Create macOS app bundle
-    #   if: matrix.os == 'macos-latest'
-    #   run: |
-    #     python setup.py bdist_dmg
+    - name: Create macOS app bundle
+      if: matrix.os == 'macos-latest'
+      run: python setup.py bdist_dmg
     
-    - name: Create Linux Tarball
+    - name: Create Linux artifact
       if: matrix.os == 'ubuntu-latest'
       run: python setup.py bdist_appimage
     
@@ -51,18 +47,18 @@ jobs:
         name: windows-installer
         path: dist/*.msi
     
-    # - name: Upload macOS artifact
-    #   if: matrix.os == 'macos-latest'
-    #   uses: actions/upload-artifact@v4
-    #   with:
-    #     name: macos-app
-    #     path: build/*.dmg
+    - name: Upload macOS artifact
+      if: matrix.os == 'macos-latest'
+      uses: actions/upload-artifact@v4
+      with:
+        name: macos-app
+        path: build/*.dmg
     
     - name: Upload Linux artifact
       if: matrix.os == 'ubuntu-latest'
       uses: actions/upload-artifact@v4
       with:
-        name: linux-package
+        name: linux-appimage
         path: dist/*.AppImage
     
     - name: Debug - List workspace contents
