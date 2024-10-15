@@ -15,7 +15,7 @@ https://github.com/MO7YW4NG/CYCU-iLearning-Scraper/assets/66549438/2c7428db-5d1a
 ## 使用方法
 
 1. [下載 msi 安裝檔](https://github.com/MO7YW4NG/CYCU-iLearning-Scraper/releases)
-2. 安裝後生成 `CYCU-iLearning-Scraper` 資料夾
+2. 安裝後生成 `CYCU-iLearning-Scraper` 資料夾 (預設於桌面)
 3. 開啟 `app.exe` 後登入即啟用!
 
 ## 版權
