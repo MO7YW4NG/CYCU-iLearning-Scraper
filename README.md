@@ -12,6 +12,8 @@ https://github.com/MO7YW4NG/CYCU-iLearning-Scraper/assets/66549438/2c7428db-5d1a
 
 ## 介紹
 此程式協助你一鍵下載 iLearning 平台之當學期教材 (含 pdf, pptx, mp4)。
+
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/MO7YW4NG/CYCU-iLearning-Scraper/total)
 ## 使用方法
 
 1. [下載 msi 安裝檔](https://github.com/MO7YW4NG/CYCU-iLearning-Scraper/releases)
